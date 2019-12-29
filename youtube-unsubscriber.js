@@ -1,33 +1,21 @@
 var i = 0;
+var channels = document.getElementsByTagName("ytd-channel-renderer");
+var refreshIntervalId = setInterval(unsubscribe, 2000);
 
-var myVar = setInterval(myTimer, 3000);
-
-function myTimer() {
-
-    var els = document.getElementById("grid-container").getElementsByClassName("ytd-expanded-shelf-contents-renderer");
-
-    if (i < els.length) {
-
-        els[i].querySelector("[aria-label^='Unsubscribe from']").click();
-
-        setTimeout(function () {
-
-            var unSubBtn = document.getElementById("confirm-button").click();
-
-        }, 2000);
-
-        setTimeout(function () {
-
-            els[i].parentNode.removeChild(els[i]);
-
-        }, 2000);
-
+function unsubscribe() {
+    if (channels.length>0) {
+        channels[0].getElementsByTagName("paper-button")[0].click();
+        setTimeout(function() {
+            document.getElementById("confirm-button").click();
+        }, 500);
+        setTimeout(function() {
+            channels[0].parentNode.removeChild(channels[0]);
+        }, 1000);
     }
-
+    else{
+        clearInterval(refreshIntervalId);
+    }
     i++;
-
-    console.log(i + " Channels Unsubscribed\n");
-
-    console.log(els.length + " remaining");
-
+    console.log(i + " unsubscribed");
+    console.log(channels.length + " remaining");
 }
